@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-
+import datetime
 
 
 class SaleOrderLineInheritance(models.Model):
@@ -24,6 +24,7 @@ class AccountOrderLineInheritance(models.Model):
 
 
     def computed_expiray(self):
+
         #Get Stock Moves Related to SaleOrder Using ORM Search Method
         move_line = self.env['stock.picking'].search([('origin','=',self.so_name.name)])
         mapped_lines = move_line.mapped('move_line_ids_without_package')
@@ -38,19 +39,23 @@ class AccountOrderLineInheritance(models.Model):
         #Get Lot Name and Expiry Date from Stock Move
         #Loop in Lots inside Stock Move to Get Required Data
         for mapped in mapped_lines.lot_id:
+            if mapped.expiration_date:
+                date = mapped.expiration_date.date()
+                str_date = date.strftime('%m/%Y')
+                name = mapped.name
+                product = mapped.product_id.name
 
-            date = mapped.expiration_date.date()
-            str_date = date.strftime('%d/%m/%y')
-            name = mapped.name
-            product = mapped.product_id.name
+                list_dates.append(str_date)
+                list_names.append(name)
+                list_product.append(product)
 
-            list_dates.append(str_date)
-            list_names.append(name)
-            list_product.append(product)
-
-            list_dict['dates'] = list_dates
-            list_dict['names'] = list_names
-            list_dict['products'] = list_product
+                list_dict['dates'] = list_dates
+                list_dict['names'] = list_names
+                list_dict['products'] = list_product
+                print('>>>>>>>>>>>>>>>>>>>', list_dict['dates'])
+            else:
+                for rec in self:
+                    rec.product_name = []
 
 
         for rec in self:
@@ -73,8 +78,9 @@ class AccountOrderLineInheritance(models.Model):
 
 
             for indexes in index_list:
-                # o = ' Lot No. : '+ list_dict['names'][indexes] + 'Product : ' + list_dict['products'][indexes] + '  Expiray: ' + list_dict['dates'][indexes]
-                o = ' Lot No. : '+ list_dict['names'][indexes] +  '  Expiray: ' + list_dict['dates'][indexes]
-                final.append(o)
-                cd = final[min(index_list):max(index_list)+1]
-                rec.product_name = cd
+                # names = ' Lot No. : '+ list_dict['names'][indexes] + 'Product : ' + list_dict['products'][indexes] + '  Expiray: ' + list_dict['dates'][indexes]
+                names = ' Lot : '+ list_dict['names'][indexes] +  '  Expiray: ' + list_dict['dates'][indexes]
+                final.append(names)
+                last_name = final[min(index_list):max(index_list)+1]
+                rec.product_name = last_name
+
