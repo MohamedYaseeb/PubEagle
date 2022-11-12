@@ -8,9 +8,10 @@
     'summary': 'Add Expiray Date in an Invoice Line',
     'description': "Add Expiray Date in Invoice Lines for each Product",
     'version': '1.0',
-    'depends': ['base','stock','sale','account'],
+    'depends': ['base','stock','product_expiry','sale','account'],
     'data': [
         'views/inherit_invoice.xml',
+        'views/inherit_stock.xml',
         'report/inherit_invoice_report.xml'
     ],
     'price': 59,
