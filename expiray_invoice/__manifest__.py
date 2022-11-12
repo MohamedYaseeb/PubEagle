@@ -6,7 +6,16 @@
     'author' : 'Mohamed Yaseen Dahab',
     'category': 'Accounting/Accounting',
     'summary': 'Add Expiray Date in an Invoice Line',
-    'description': "Add Expiray Date in Invoice Lines for each Product",
+    'description': """
+            ### Module Main Features
+            
+            1] add lot/serial and Expiration Date in Sale Order Line and Invoice Line
+            2] add Expiration Date in Invoice PDF Report
+            3] add Expiration Date on Inventory Adjustment Line
+            4] Adjust Lot Expiration Date from Inventory Adjustment Lines
+    
+    
+    """,
     'version': '1.0',
     'depends': ['base','stock','product_expiry','sale','account'],
     'data': [
