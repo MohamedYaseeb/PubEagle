@@ -7,7 +7,7 @@
     'category': 'Accounting/Accounting',
     'summary': 'Add Expiray Date in an Invoice Line',
     'description': """
-            ### Add Expiration Date on Invoice Line / Inventory Adjustment
+            ### Adds Expiration Date on Invoice Line / Inventory Adjustment
             
             1] add lot/serial and Expiration Date in Sale Order Line and Invoice Line
             2] add Expiration Date in Invoice PDF Report
